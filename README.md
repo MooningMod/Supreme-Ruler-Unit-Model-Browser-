@@ -1,5 +1,7 @@
 # Supreme Ruler Unit Model Browser
 
+https://www.youtube.com/watch?v=QW5LWEKzHeY
+
 1. Installation
 
 Download and extract the ZIP archive.
