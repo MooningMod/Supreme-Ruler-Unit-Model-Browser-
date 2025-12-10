@@ -39,11 +39,7 @@ so that the viewer automatically opens the selected model without user interacti
 
 B. mview.exe (Not Redistributable)
 
-The classic mesh viewer used for .x models, known as mview.exe, is distributed By Microsoft. It is proprietary software and cannot be redistributed.
-
-Therefore the program cannot include it in this package.
-
-Just copy mview.exe into the same folder as UnitModelBrowser.exe
+The classic mesh viewer used for .x models, known as mview.exe, is distributed By Microsoft. Therefore the program cannot include it in this package. Just copy mview.exe into the same folder as UnitModelBrowser.exe
 
 This step is required if you want to use mview.exe as viewer for SRU.
 
