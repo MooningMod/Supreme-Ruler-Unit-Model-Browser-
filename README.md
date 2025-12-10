@@ -1,4 +1,4 @@
-# Supreme-Ruler-Unit-Model-Browser-
+# Supreme Ruler Unit Model Browser
 
 1. Installation
 
