@@ -1,0 +1,78 @@
+===============================================================================
+PATCH: DirectXTK Model Viewer - Simple Command Line Auto-Load
+===============================================================================
+This patch adds minimal command line support to DirectXTKModelViewer, allowing
+a model path to be passed as argv[1]. The model is loaded automatically on the
+first Tick() call.
+
+Example:
+   DirectXTKModelViewer.exe "C:\path\to\UNIT450.cmo"
+===============================================================================
+
+
+FILE: Game.h  (around line ~60)
+
+Add this public member:
+
+    wchar_t m_cmdLineModel[MAX_PATH] = {};
+
+
+
+-------------------------------------------------------------------------------
+FILE: Main.cpp
+-------------------------------------------------------------------------------
+
+Inside wWinMain, AFTER g_game->Initialize(), add:
+
+    // Store model path from command line (if any)
+    int argc = 0;
+    LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argc);
+    if (argv && argc > 1)
+    {
+        wcscpy_s(g_game->m_cmdLineModel, argv[1]);
+    }
+    if (argv)
+        LocalFree(argv);
+
+
+
+-------------------------------------------------------------------------------
+FILE: Game.cpp
+-------------------------------------------------------------------------------
+
+At the *beginning* of Game::Tick(), insert:
+
+    // Auto-load a model passed on the command line
+    if (*m_cmdLineModel)
+    {
+        OnFileOpen(m_cmdLineModel);
+        *m_cmdLineModel = 0; // Clear after first use
+    }
+
+
+
+
+===============================================================================
+BUILD INSTRUCTIONS
+===============================================================================
+
+1. git clone https://github.com/walbourn/directxtkmodelviewer
+2. cd directxtkmodelviewer
+3. git submodule update --init --recursive
+4. Apply the edits to Game.h, Main.cpp, Game.cpp
+5. Open DirectXTKModelViewer_Desktop_2019.sln in Visual Studio
+6. Select "Release x64"
+7. Build solution
+8. The compiled viewer will be located in:
+      Bin/Desktop_2019/x64/Release/DirectXTKModelViewer.exe
+
+
+===============================================================================
+USAGE
+===============================================================================
+
+DirectXTKModelViewer.exe                       # Opens file dialog
+DirectXTKModelViewer.exe "C:\model.cmo"        # Auto-loads model
+DirectXTKModelViewer.exe "C:\model.sdkmesh"
+DirectXTKModelViewer.exe "C:\model.vbo"
+===============================================================================
