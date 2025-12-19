@@ -2,6 +2,23 @@
 
 https://www.youtube.com/watch?v=QW5LWEKzHeY
 
+Unit Model Browser r04
+Hey everyone! New update for the Unit Model Browser:
+Sorting: You can now sort the unit list by ID (ascending/descending), Name (A-Z / Z-A), Class, or Picnum
+This was requested - now you can easily browse units by number range to find specific classes
+
+Region Filtering
+Added full region code support based on the official wiki
+SR2030: supports both UPPERCASE and lowercase codes (e.g., U for USA, b for Brazil, h for Poland)
+SRU: uppercase only with grouped regions (e.g., R = Russia/Ukraine/Soviet/Belarus)
+Dropdown updates automatically when switching between games
+Custom option if you need to filter by specific codes
+
+Mirrored Models Fix
+If your models appear mirrored in the DirectXTK viewer, I've included a C++ patch that adds a Z key toggle to switch between left-handed and right-handed coordinate systems
+Just press Z and the model reloads with correct orientation
+Let me know if you find any issues
+
 1. Installation
 
 Download and extract the ZIP archive.
