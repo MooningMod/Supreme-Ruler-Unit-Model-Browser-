@@ -1,0 +1,73 @@
+// =============================================================================
+// MIRROR FIX FOR DIRECTXTK MODEL VIEWER
+// =============================================================================
+// 
+// Problem: Models appear mirrored because of coordinate system mismatch
+// Solution: Add 'Z' key to toggle between left-handed and right-handed coords
+//
+// STEP 1: In Game.cpp constructor (around line 50), OPTIONALLY change default:
+// -----------------------------------------------------------------------------
+// BEFORE:
+    m_lhcoords(true),
+// AFTER (if you want RH as default):
+    m_lhcoords(false),
+
+// STEP 2: In Game.cpp, find the keyboard handling section (around line 380-400)
+//         Look for other key handlers like:
+//         if (m_keyboardTracker.pressed.T)
+//             CycleToneMapOperator();
+//
+// ADD THIS BLOCK after similar key handlers:
+// -----------------------------------------------------------------------------
+
+        if (m_keyboardTracker.pressed.Z)
+        {
+            m_lhcoords = !m_lhcoords;
+            CreateProjection();
+            CameraHome();
+            
+            // Optional: reload model with new coordinate system
+            if (m_model)
+            {
+                m_reloadModel = true;
+            }
+        }
+
+// =============================================================================
+// COMPLETE KEYBOARD SECTION EXAMPLE (for reference):
+// =============================================================================
+// Find this section in Update() function, around line 370-420:
+
+        if (m_keyboardTracker.pressed.C)
+            CycleBackgroundColor();
+
+        if (m_keyboardTracker.pressed.T)
+            CycleToneMapOperator();
+
+        if (m_keyboardTracker.pressed.N)
+            CycleBoneRenderMode();
+
+        // === ADD THIS ===
+        if (m_keyboardTracker.pressed.Z)
+        {
+            m_lhcoords = !m_lhcoords;
+            CreateProjection();
+            CameraHome();
+            if (m_model)
+            {
+                m_reloadModel = true;
+            }
+        }
+        // === END ADD ===
+
+        if (m_keyboardTracker.pressed.O)
+        {
+            PostMessage(m_deviceResources->GetWindow(), WM_USER, 0, 0);
+        }
+
+// =============================================================================
+// After applying this patch:
+// - Press 'Z' to toggle between Left-Handed and Right-Handed coordinates
+// - The model will reload with the correct orientation
+// - Try both to see which one displays your SR meshes correctly
+// =============================================================================
